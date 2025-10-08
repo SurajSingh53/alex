@@ -1,0 +1,17 @@
+# Core dependencies for Alex RAG Librarian
+streamlit>=1.28.0
+pinecone-client>=2.2.4
+PyPDF2>=3.0.1
+langchain>=0.0.350
+langchain-community>=0.0.10
+python-dotenv>=1.0.0
+requests>=2.31.0
+numpy>=1.24.0
+pandas>=2.0.0
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.2
+tiktoken>=0.5.1
+
+# Optional but recommended
+watchdog>=3.0.0
+python-multipart>=0.0.6

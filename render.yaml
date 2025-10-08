@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: alex-rag-librarian
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: ""
+    startCommand: ""
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PINECONE_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: PINECONE_INDEX
+        value: alex-librarian
+      - key: OLLAMA_MODEL
+        value: llama3.1:8b
+      - key: CHUNK_SIZE
+        value: 800
+      - key: MAX_DOCS
+        value: 5
+      - key: SIMILARITY_THRESHOLD
+        value: 0.4
+    autoDeploy: true
