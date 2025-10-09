@@ -8,6 +8,7 @@ from pinecone import Pinecone
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import time
+from pinecone import Pinecone, ServerlessSpec
 
 # Load environment variables
 load_dotenv()
@@ -32,24 +33,31 @@ def init_pinecone():
         if not api_key:
             st.error("❌ Pinecone API key not found. Please set PINECONE_API_KEY environment variable.")
             return None
-
+        
         pc = Pinecone(api_key=api_key)
         index_name = os.getenv('PINECONE_INDEX', 'alex-librarian')
-
+        
         # Create index if it doesn't exist
         existing_indexes = [index.name for index in pc.list_indexes()]
         if index_name not in existing_indexes:
             pc.create_index(
                 name=index_name,
-                dimension=384,  # sentence-transformers/all-MiniLM-L6-v2 dimension
-                metric='cosine'
+                dimension=384,
+                metric='cosine',
+                spec=ServerlessSpec(
+                    cloud='aws',
+                    region='us-east-1'
+                )
             )
-            time.sleep(10)  # Wait for index to be ready
-
+            # Wait for index to be ready
+            while not pc.describe_index(index_name).status['ready']:
+                time.sleep(1)
+        
         return pc.Index(index_name)
     except Exception as e:
         st.error(f"❌ Failed to connect to Pinecone: {str(e)}")
         return None
+
 
 @st.cache_resource
 def load_embedding_model():
