@@ -36,5 +36,7 @@ EXPOSE 8501
 # Use startup script
 CMD ["./start.sh"]
 # Health check for Render
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3     CMD curl -f http://localhost:${PORT:-8501}/_stcore/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8501/_stcore/health || exit 1
+
 
