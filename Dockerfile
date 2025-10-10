@@ -1,4 +1,3 @@
-# Optimized Dockerfile for Alex RAG Librarian - Render Ready
 FROM python:3.11-slim
 
 # Set environment variables
@@ -31,7 +30,7 @@ RUN mkdir -p /app/data /app/uploads /tmp/ollama
 ENV OLLAMA_HOST=0.0.0.0
 ENV OLLAMA_ORIGINS=*
 
-# Expose port for Streamlit (Render will set PORT env var)
+# Expose port for Streamlit
 EXPOSE 8501
 # Use startup script
 CMD ["./start.sh"]
