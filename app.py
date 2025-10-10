@@ -37,7 +37,7 @@ def init_pinecone():
         pc = Pinecone(api_key=api_key)
         index_name = os.getenv('PINECONE_INDEX', 'alex-librarian')
         
-        # Create index if it doesn't exist
+        # Create index 
         existing_indexes = [index.name for index in pc.list_indexes()]
         if index_name not in existing_indexes:
             pc.create_index(
